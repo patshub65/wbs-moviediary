@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wbs-moviediary</title>
+    <link href="./src/style.css" rel="stylesheet" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-100 text-gray-900">
+    <!-- NAVBAR -->
+    <header>
+      <nav class="bg-gray-900 text-white p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+          <h1 class="text-xl font-bold">Movie Diary</h1>
+          <ul class="flex gap-6">
+            <li><a href="#" class="hover:text-gray-300">Home</a></li>
+            <li><a href="#" class="hover:text-gray-300">Journal</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- SEARCH BAR -->
+    <section class="bg-white py-6 shadow">
+      <div class="max-w-7xl mx-auto px-4">
+        <input
+          type="text"
+          placeholder="Search for a movie..."
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+        />
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="grow max-w-7xl mx-auto p-6 space-y-10">
+      <!-- GRID 1 -->
+      <section>
+        <h2 class="text-lg font-semibold mb-4">Sci-Fi</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <!-- Movie cards go here -->
+        </div>
+      </section>
+
+      <!-- GRID 2 -->
+      <section>
+        <h2 class="text-lg font-semibold mb-4">Swedish Comedy</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <!-- Movie cards go here -->
+        </div>
+      </section>
+
+      <!-- GRID 3 -->
+      <section>
+        <h2 class="text-lg font-semibold mb-4">Thriller</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <!-- Movie cards go here -->
+        </div>
+      </section>
+
+      <!-- GRID 4 -->
+      <section>
+        <h2 class="text-lg font-semibold mb-4">Adventure</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <!-- Movie cards go here -->
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white text-center p-4">
+      <p>© 2026 Movie Diary - Powered by TMDB</p>
+    </footer>
+  </body>
+</html>
