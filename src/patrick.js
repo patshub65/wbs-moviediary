@@ -14,8 +14,8 @@
  * ========================|
 */
 
-const apiKey = "667aceb5e5357a883579caa776dba165";
-const SCIFI_GENRE_ID = 878;
+export const apiKey = "667aceb5e5357a883579caa776dba165";
+export const SCIFI_GENRE_ID = 878;
 
 
 /**
@@ -70,3 +70,22 @@ document.addEventListener("DOMContentLoaded", () => {
  * Patrick's LocalStorage  |
  * ========================|
  */
+
+function saveToFavorites(movie) {
+  // 1. Get existing favorites or an empty array if none exist
+  const favorites = JSON.parse(localStorage.getItem('savedMovies')) || [];
+
+  // 2. Check if movie is already favorited to avoid duplicates
+  const isDuplicate = favorites.some(fav => fav.id === movie.id);
+
+  if (!isDuplicate) {
+    favorites.push(movie);
+
+    localStorage.setItem('savedMovies', JSON.stringify(favorites));
+    alert(`${movie.title} added to journal!`);
+  
+  } else {
+    alert("Already in your journal");
+  }
+
+}

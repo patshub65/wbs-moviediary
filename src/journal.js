@@ -21,16 +21,10 @@ console.log(movies);
 
 // Patrick's Journal
 
-import { apiKey, IMG_PATH } from "./patrick.js";
-
-document.addEventListener("DOMContentLoaded", () => {
-    displayJournal();
-});
-
 function displayJournal() {
     const container = document.getElementById('journal-grid');
     // Retrieve the array of objects from LocalStorage (Requirement FR013)
-    cosnt favorites = JSON.parse(localStorage.getItem('myMovies')) || [];
+    const favorites = JSON.parse(localStorage.getItem('savedMovies')) || [];
 
     if (favorites.length === 0) {
         container.innerHTML = "<p class='text-white'>Your diary is empty!</p>";
