@@ -18,3 +18,33 @@ movies.forEach(movie => {
     card.appendChild(img);
 });
 console.log(movies);
+
+// Patrick's Journal
+
+import { apiKey, IMG_PATH } from "./patrick.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    displayJournal();
+});
+
+function displayJournal() {
+    const container = document.getElementById('journal-grid');
+    // Retrieve the array of objects from LocalStorage (Requirement FR013)
+    cosnt favorites = JSON.parse(localStorage.getItem('myMovies')) || [];
+
+    if (favorites.length === 0) {
+        container.innerHTML = "<p class='text-white'>Your diary is empty!</p>";
+        return;
+    }
+
+    favorites.forEach(movie => {
+        const card = document.createElement('div');
+        card.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+            <h3>${movie.title}</h3>
+            <textarea id="note-${movie.id}" placeholder="Add a review...">${movie.notes || ''}</textarea>
+            <button onclick="saveNote(${movie.id})">Save Note</button> 
+        `;
+        container.appendChild(card);
+    })
+}
