@@ -23,14 +23,19 @@ console.log(movies);
 
 function displayJournal() {
     const container = document.getElementById('journal-grid');
-    // Retrieve the array of objects from LocalStorage (Requirement FR013)
-    const favorites = JSON.parse(localStorage.getItem('savedMovies')) || [];
+    if (!container) {
+        console.log('journal-grid not found');
+        return;
+    }
+    // Retrieve the array of objects from LocalStorage 
+    const favorites = JSON.parse(localStorage.getItem('favedMovies')) || [];
 
     if (favorites.length === 0) {
         container.innerHTML = "<p class='text-white'>Your diary is empty!</p>";
         return;
     }
 
+    
     favorites.forEach(movie => {
         const card = document.createElement('div');
         card.innerHTML = `
@@ -41,4 +46,19 @@ function displayJournal() {
         `;
         container.appendChild(card);
     })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayJournal();
+});
+
+function saveNote(id) {
+    const textarea = document.getElementById(`note-${id}`);
+    if (!textarea) return;
+
+    const favorites = JSON.parse(localStorage.getItem('favedMovies')) || [];
+    const updated = favorites.map(movie =>
+        movie.id === id ? { ...movie, notes: textarea.value } : movie
+    );
+    localStorage.setItem('favedMovies', JSON.stringify(updated));
 }
