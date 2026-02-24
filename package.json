@@ -13,6 +13,20 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
+    "daisyui": "^5.5.19",
     "tailwindcss": "^4.2.0"
-  }
+  },
+  "description": "",
+  "main": "vite.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patshub65/wbs-moviediary.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patshub65/wbs-moviediary/issues"
+  },
+  "homepage": "https://github.com/patshub65/wbs-moviediary#readme"
 }

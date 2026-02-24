@@ -42,7 +42,11 @@ function displayJournal() {
             <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
             <h3>${movie.title}</h3>
             <textarea id="note-${movie.id}" placeholder="Add a review...">${movie.notes || ''}</textarea>
-            <button onclick="saveNote(${movie.id})">Save Note</button> 
+            <button 
+                onclick="saveNote(${movie.id})" 
+                class="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-1 rounded shadow transition-colors duration-150">
+                Save Note
+            </button>
         `;
         container.appendChild(card);
     })
