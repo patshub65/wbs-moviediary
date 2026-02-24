@@ -39,7 +39,6 @@ async function fetchPopularScifi() {
 
 function renderScifiMovies(movies) {
     const grid = document.getElementById('scifi-grid');
-    const favBtn = document.createElement('button');
     movies.forEach(movie => {
         const card = document.createElement('div');
         card.className = 'bg-gray-800 rounded-lg overflow-hidden';
@@ -48,16 +47,17 @@ function renderScifiMovies(movies) {
       <div class="p-2">
         <h3 class="font-semibold text-sm">${movie.title}</h3>
       </div>`;
-      grid.appendChild(card);
-        
-    });
-    favBtn.textContent = '⭐️ Add to Favorites';
-    favBtn.className = 'mt-2 bg-red-600 px-2 py-1 rounded text-xs';
 
-    favBtn.onclick = () => {
-      saveToFavorites(movie);
-    }
-    card.appendChild(favBtn);
+        const favBtn = document.createElement('button');
+        favBtn.textContent = '⭐️ Add to Favorites';
+        favBtn.className = 'mt-2 bg-red-600 px-2 py-1 rounded text-xs';
+        favBtn.onclick = () => {
+          saveToFavorites(movie);
+        };
+
+        card.appendChild(favBtn);
+        grid.appendChild(card);
+    });
 }
 
 // fetchPopularScifi is now called once the DOM is ready
@@ -70,10 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
  * Patrick's LocalStorage  |
  * ========================|
  */
-
 function saveToFavorites(movie) {
-  // 1. Get existing favorites or an empty array if none exist
-  const favorites = JSON.parse(localStorage.getItem('savedMovies')) || [];
+  // 1. Get existing Patrick favorites or an empty array if none exist
+  const favorites = JSON.parse(localStorage.getItem('favedMovies')) || [];
 
   // 2. Check if movie is already favorited to avoid duplicates
   const isDuplicate = favorites.some(fav => fav.id === movie.id);
@@ -81,11 +80,32 @@ function saveToFavorites(movie) {
   if (!isDuplicate) {
     favorites.push(movie);
 
-    localStorage.setItem('savedMovies', JSON.stringify(favorites));
+    localStorage.setItem('favedMovies', JSON.stringify(favorites));
+
+    // #region agent log
+    fetch('http://127.0.0.1:7574/ingest/219a1909-8e2c-4afd-8b1c-b380b065ac1b', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Debug-Session-Id': '6e5397'
+      },
+      body: JSON.stringify({
+        sessionId: '6e5397',
+        runId: 'initial',
+        hypothesisId: 'H_PATRICK_SEPARATION',
+        location: 'patrick.js:saveToFavorites',
+        message: 'Patrick favorites updated in favedMovies',
+        data: {
+          newLength: favorites.length
+        },
+        timestamp: Date.now()
+      })
+    }).catch(() => {});
+    // #endregion
+
     alert(`${movie.title} added to journal!`);
   
   } else {
     alert("Already in your journal");
   }
-
 }
