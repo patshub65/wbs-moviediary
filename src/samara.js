@@ -1,4 +1,3 @@
-console.log("Samara JS loaded");
 /**
  * ================================================
  *  API Authentication
@@ -30,7 +29,7 @@ import { movieCardLayOut } from "/src/util.js";
  * ========================|
  */
 import { BASE_URL } from "/src/api.js";
-
+export const IMG = "https://image.tmdb.org/t/p/w500";
 const url = BASE_URL + "/discover/movie?with_genres=53&sort_by=popularity.desc";
 async function fetchMoviesByGenre() {
     try {
@@ -57,17 +56,24 @@ async function fetchMoviesByGenre() {
         console.error(error.message);
     }
 }
-fetchMoviesByGenre();
 const gridDiv = document.getElementById("thriller-grid");
+if (!gridDiv) {
+  console.warn("thriller-grid not found");
+} else {
+  fetchMoviesByGenre();
+}
+
 function displayMovies(movie) {
     const movieGrid = movieCardLayOut(movie);
+    movieGrid.className = "bg-red-900 text-white rounded-lg overflow-hidden shadow-lg p-3 hover:scale-105 transition-transform duration-200";
     movieGrid.addEventListener("click", () => {
         saveToStorage(movie);
     });
 
     movieGrid.className = "bg-gray-900 rounded-lg overflow-hidden shadow";
     const movieImg = document.createElement("img");
-    movieImg.setAttribute("src", "https://image.tmdb.org/t/p/w500" + movie.poster_path);
+    movieImg.setAttribute("src", IMG + movie.poster_path);
+    movieImg.alt = movie.title;
     gridDiv.appendChild(movieGrid);
     movieGrid.appendChild(movieImg);
 }
