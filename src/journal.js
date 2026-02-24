@@ -62,3 +62,6 @@ function saveNote(id) {
     );
     localStorage.setItem('favedMovies', JSON.stringify(updated));
 }
+
+// Expose for inline onclick handler in journal.html
+window.saveNote = saveNote;
