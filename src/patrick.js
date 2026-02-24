@@ -39,6 +39,7 @@ async function fetchPopularScifi() {
 
 function renderScifiMovies(movies) {
     const grid = document.getElementById('scifi-grid');
+    const favBtn = document.createElement('button');
     movies.forEach(movie => {
         const card = document.createElement('div');
         card.className = 'bg-gray-800 rounded-lg overflow-hidden';
@@ -50,6 +51,13 @@ function renderScifiMovies(movies) {
       grid.appendChild(card);
         
     });
+    favBtn.textContent = '⭐️ Add to Favorites';
+    favBtn.className = 'mt-2 bg-red-600 px-2 py-1 rounded text-xs';
+
+    favBtn.onclick = () => {
+      saveToFavorites(movie);
+    }
+    card.appendChild(favBtn);
 }
 
 // fetchPopularScifi is now called once the DOM is ready
