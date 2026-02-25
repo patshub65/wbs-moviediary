@@ -8,6 +8,7 @@
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/patrick.js"></script>
     <script type="module" src="/src/samara.js"></script>
+    <script type="module" src="/src/nil.js"></script>
   </head>
   <body class="min-h-screen flex flex-col bg-gray-100 text-gray-900">
     <!-- NAVBAR -->
@@ -17,7 +18,9 @@
           <h1 class="text-xl font-bold">Movie Diary</h1>
           <ul class="flex gap-6">
             <li><a href="index.html" class="hover:text-gray-300">Home</a></li>
-            <li><a href="journal.html" class="hover:text-gray-300">Journal</a></li>
+            <li>
+              <a href="journal.html" class="hover:text-gray-300">Journal</a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -37,7 +40,7 @@
     <!-- MAIN CONTENT -->
     <main class="grow max-w-7xl mx-auto p-6 space-y-10">
       <!-- GRID 1 -->
-      <section>
+      <section class="overflow-hidden">
         <h2 class="text-lg font-semibold mb-4">Sci-Fi</h2>
         <div id="scifi-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <!-- Movie cards go here -->
@@ -55,7 +58,7 @@
       <!-- GRID 3 -->
       <section>
         <h2 class="text-lg font-semibold mb-4">Thriller</h2>
-        <div id="thriller-grid"  class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div id="thriller-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
           <!-- Movie cards go here -->
         </div>
       </section>
@@ -63,7 +66,7 @@
       <!-- GRID 4 -->
       <section>
         <h2 class="text-lg font-semibold mb-4">Adventure</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="adventureGrid">
           <!-- Movie cards go here -->
         </div>
       </section>
