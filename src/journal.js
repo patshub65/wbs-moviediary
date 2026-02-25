@@ -10,12 +10,20 @@ const movies = stored ? JSON.parse(stored) : [];
 console.log("movies length:", movies.length);
 movies.forEach(movie => {
     const card = movieCardLayOut(movie);
-    card.className = "bg-gray-900 text-white rounded-lg overflow-hidden shadow-lg p-3 hover:scale-105 transition-transform duration-200";
-    card.textContent = movie.overview;
-    movieContainer.appendChild(card);
+    card.className =
+        "bg-gray-900 text-white rounded-lg overflow-hidden shadow-lg p-3 hover:scale-105 transition-transform duration-200";
     const img = document.createElement("img");
     img.src = IMG + movie.poster_path;
+    img.alt = movie.title;
+    img.className = "w-full rounded";
+    
+
+    const overview = document.createElement("p");
+    overview.className = "mt-2 text-sm text-gray-200";
+    overview.textContent = movie.overview;
     card.appendChild(img);
+    card.appendChild(overview);
+    movieContainer.appendChild(card);
 });
 console.log(movies);
 
@@ -35,7 +43,7 @@ function displayJournal() {
         return;
     }
 
-    
+
     favorites.forEach(movie => {
         const card = document.createElement('div');
         card.innerHTML = `
