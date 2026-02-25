@@ -39,23 +39,31 @@ async function fetchPopularScifi() {
 
 function renderScifiMovies(movies) {
     const grid = document.getElementById('scifi-grid');
+    grid.className = 'flex overflow-x-auto gap-4 pb-4 scrollbar-hide';
     movies.forEach(movie => {
         const card = document.createElement('div');
-        card.className = 'bg-gray-800 rounded-lg overflow-hidden';
-        card.innerHTML =
-        `<img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-full"/>
-      <div class="p-2">
-        <h3 class="font-semibold text-sm">${movie.title}</h3>
+        card.className = 'card overflow-hidden flex-none w-48 shadow-sm';
+        card.innerHTML = `
+      <figure>
+        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-full" />
+      </figure>
+      <div class="card-body">
+        <h3 class="card-title text-sm">${movie.title}</h3>
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary btn-sm">⭐️</button>
+        </div>
       </div>`;
 
-        const favBtn = document.createElement('button');
-        favBtn.textContent = '⭐️ Add to Favorites';
-        favBtn.className = 'mt-2 bg-red-600 px-2 py-1 rounded text-xs';
-        favBtn.onclick = () => {
-          saveToFavorites(movie);
-        };
-
-        card.appendChild(favBtn);
+        const favBtn = card.querySelector('button');
+        favBtn.className = 'btn btn-primary btn-sm absolute bottom-2 right-2';
+        favBtn.style.position = 'absolute';
+        favBtn.style.bottom = '0.5rem';
+        favBtn.style.right = '0.5rem';
+        if (favBtn) {
+          favBtn.onclick = () => {
+            saveToFavorites(movie);
+          };
+        }
         grid.appendChild(card);
     });
 }
@@ -82,7 +90,6 @@ function saveToFavorites(movie) {
 
     localStorage.setItem('favedMovies', JSON.stringify(favorites));
 
-    // #region agent log
     fetch('http://127.0.0.1:7574/ingest/219a1909-8e2c-4afd-8b1c-b380b065ac1b', {
       method: 'POST',
       headers: {
@@ -102,10 +109,33 @@ function saveToFavorites(movie) {
       })
     }).catch(() => {});
     // #endregion
-
-    alert(`${movie.title} added to journal!`);
+    showDaisyToast(`${movie.title} added to journal!`, 'success');
   
   } else {
-    alert("Already in your journal");
+    showDaisyToast('Already in your journal', 'info');
   }
+}
+
+function showDaisyToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = 'toast toast-top toast-end z-50';
+
+  const alertDiv = document.createElement('div');
+  const baseAlertClass = 'alert';
+  const typeClass =
+    type === 'success'
+      ? 'alert-success'
+      : type === 'error'
+      ? 'alert-error'
+      : 'alert-info';
+
+  alertDiv.className = `${baseAlertClass} ${typeClass}`;
+  alertDiv.innerHTML = `<span>${message}</span>`;
+
+  toast.appendChild(alertDiv);
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 2500);
 }
