@@ -46,10 +46,7 @@ async function fetchMoviesByGenre() {
         const result = await response.json();
         console.log(result);
         console.log(result.results.length);
-        result.results.forEach(movie => {
-            console.log(movie.title);
-            displayMovies(movie);
-        });
+        movieCardLayOut(result.results, "thriller-grid");
 
     } catch (error) {
         console.error(error.message);
@@ -64,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchMoviesByGenre();
 });
 
-function displayMovies(movie) {
+/* function displayMovies(movie) {
     const movieGrid = movieCardLayOut(movie);
     movieGrid.classList.add(
         "group",              // needed for group-hover
@@ -122,7 +119,7 @@ function displayMovies(movie) {
     movieGrid.appendChild(journalBtn);
     //Append card to grid
     gridDiv.appendChild(movieGrid);
-}
+} */
 
 /**
  * ========================|
@@ -137,5 +134,4 @@ function saveToStorage(movie) {
         arr.push(movie);
         localStorage.setItem("savedMovies", JSON.stringify(arr));
     }
-
 }
