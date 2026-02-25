@@ -7,15 +7,14 @@
  * inside this file using their personal TMDB API key.
  *
  */
-
+import { movieCardLayOut } from "/src/util.js";
+import { BASE_URL } from "/src/api.js";
 /**
  * ========================|
  * Samara's KEY            |
  * ========================|
  */
 const tmdbToken = import.meta.env.VITE_TMDB_TOKEN;
-
-import { movieCardLayOut } from "/src/util.js";
 /**
  * Technically, one shared fetch implementation would be enough.
  * However, the goal here is educational, so it helps to
@@ -28,7 +27,7 @@ import { movieCardLayOut } from "/src/util.js";
  * Samara's FETCH          |
  * ========================|
  */
-import { BASE_URL } from "/src/api.js";
+
 export const IMG = "https://image.tmdb.org/t/p/w500";
 const url = BASE_URL + "/discover/movie?with_genres=53&sort_by=popularity.desc";
 async function fetchMoviesByGenre() {
@@ -47,36 +46,80 @@ async function fetchMoviesByGenre() {
         const result = await response.json();
         console.log(result);
         console.log(result.results.length);
-        result.results.forEach(movie => {
-            console.log(movie.title);
-            displayMovies(movie);
-        });
+        movieCardLayOut(result.results, "thriller-grid");
 
     } catch (error) {
         console.error(error.message);
     }
 }
-const gridDiv = document.getElementById("thriller-grid");
-if (!gridDiv) {
-  console.warn("thriller-grid not found");
-} else {
-  fetchMoviesByGenre();
-}
+document.addEventListener("DOMContentLoaded", () => {
+    const gridDiv = document.getElementById("thriller-grid");
+    if (!gridDiv) {
+        console.warn("thriller-grid not found");
+        return;
+    }
+    fetchMoviesByGenre();
+});
 
-function displayMovies(movie) {
+/* function displayMovies(movie) {
     const movieGrid = movieCardLayOut(movie);
-    movieGrid.className = "bg-red-900 text-white rounded-lg overflow-hidden shadow-lg p-3 hover:scale-105 transition-transform duration-200";
-    movieGrid.addEventListener("click", () => {
-        saveToStorage(movie);
-    });
+    movieGrid.classList.add(
+        "group",              // needed for group-hover
+        "relative",
+        "bg-gray-900",
+        "rounded-lg",
+        "overflow-hidden",
+        "shadow-lg",
+        "p-3",
+        "hover:scale-105",
+        "transition-transform",
+        "duration-200"
+    );
 
-    movieGrid.className = "bg-gray-900 rounded-lg overflow-hidden shadow";
+    //img
     const movieImg = document.createElement("img");
     movieImg.setAttribute("src", IMG + movie.poster_path);
     movieImg.alt = movie.title;
-    gridDiv.appendChild(movieGrid);
+    movieImg.classList.add(
+        "w-full",
+        "rounded",
+        "transition",
+        "duration-300",
+        "group-hover:brightness-50"
+    );
+
+    // Journal Button (hidden by default)
+    const journalBtn = document.createElement("button");
+    journalBtn.textContent = "+ journal";
+
+    journalBtn.classList.add(
+        "absolute",
+        "bottom-4",
+        "left-1/2",
+        "-translate-x-1/2",
+        "bg-red-600",
+        "hover:bg-red-900",
+        "text-white",
+        "px-4",
+        "py-2",
+        "rounded",
+        "opacity-0",
+        "transition-opacity",
+        "duration-300",
+        "group-hover:opacity-100",
+        "cursor-pointer"
+
+    );
+
+    journalBtn.addEventListener("click", (e) => {
+        saveToStorage(movie);
+    })
+    //Append children
     movieGrid.appendChild(movieImg);
-}
+    movieGrid.appendChild(journalBtn);
+    //Append card to grid
+    gridDiv.appendChild(movieGrid);
+} */
 
 /**
  * ========================|
@@ -91,5 +134,4 @@ function saveToStorage(movie) {
         arr.push(movie);
         localStorage.setItem("savedMovies", JSON.stringify(arr));
     }
-
 }
