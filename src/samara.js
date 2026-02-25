@@ -55,12 +55,14 @@ async function fetchMoviesByGenre() {
         console.error(error.message);
     }
 }
-const gridDiv = document.getElementById("thriller-grid");
-if (!gridDiv) {
-    console.warn("thriller-grid not found");
-} else {
+document.addEventListener("DOMContentLoaded", () => {
+    const gridDiv = document.getElementById("thriller-grid");
+    if (!gridDiv) {
+        console.warn("thriller-grid not found");
+        return;
+    }
     fetchMoviesByGenre();
-}
+});
 
 function displayMovies(movie) {
     const movieGrid = movieCardLayOut(movie);
